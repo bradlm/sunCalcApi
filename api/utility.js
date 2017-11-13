@@ -8,12 +8,15 @@ class Utility {
     res.status(code).send(JSON.stringify(data));
   }
   static calculate(query) {
+    ['epoch','lat','lng'].forEach(prop => {
+      query[prop] = Number(query[prop]);
+    });
     var {
       epoch,
       lat,
       lng, 
       event
-    } = query,
+    } = query, 
     time = SunCalc.getTimes(epoch ? new Date(epoch) : new Date(), lat, lng);
     if(event) {
       var output = {};
